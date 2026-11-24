@@ -1,0 +1,2673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIXEL.BA — Junior Business Analyst</title>
+<meta name="description" content="Portfolio of a Junior Business Analyst: skills, tools and learning path presented as a pixel-style achievement system">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1B191A">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="PIXEL.BA — Junior Business Analyst">
+<meta property="og:description" content="I turn business challenges into structured solutions">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Press+Start+2P&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+/* Fonts (loaded from Google Fonts in <head>) */
+:root {
+  --font-sans: "Manrope";
+  --font-pixel: "Press Start 2P";
+}
+/* minimal reset (replaces Tailwind preflight) */
+svg, img { display: block; }
+button { background: transparent; border-radius: 0; padding: 0; }
+dialog { color: inherit; }
+
+/* ==========================================================
+   DESIGN TOKENS — built on three base colors
+   #1B191A graphite · #E9E4E0 paper · #943A1F rust
+   ========================================================== */
+:root {
+  --bg: #1b191a;
+  --bg-2: #221f20;
+  --bg-3: #2a2627;
+  --fg: #e9e4e0;
+  --fg-dim: rgba(233, 228, 224, 0.7);
+  --fg-mute: rgba(233, 228, 224, 0.58);
+  --line: rgba(233, 228, 224, 0.12);
+  --line-strong: rgba(233, 228, 224, 0.28);
+
+  --accent: #943a1f;
+  --accent-hi: #ad4623; /* hover */
+  --accent-lo: #6e2b17;
+  --accent-deep: #4a1d10;
+  --accent-light: #e08a62; /* accent used for small text on dark */
+  --glow: rgba(148, 58, 31, 0.55);
+
+  --pixel: 2px;
+  --wrap: 1200px;
+  --gap: clamp(24px, 4vw, 56px);   /* единый горизонтальный отступ между колонками */
+  --gap-y: clamp(24px, 3vw, 40px); /* единый вертикальный отступ между блоками */
+  --skill-h: 72px;                 /* единая высота карточки навыка */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 0;
+}
+
+@media (min-width: 1024px) and (min-height: 720px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+  .screen {
+    scroll-snap-align: start;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* faint pixel grid over the whole page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.22;
+  z-index: 0;
+}
+
+main,
+.site-header,
+.tabbar {
+  position: relative;
+  z-index: 1;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: -80px;
+  z-index: 100;
+  background: var(--fg);
+  color: var(--bg);
+  padding: 10px 14px;
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ----- pixel frame: notched corners, only box-shadow (never moves) ----- */
+.px {
+  --fc: var(--line-strong);
+  box-shadow:
+    0 calc(var(--pixel) * -1) 0 0 var(--fc),
+    0 var(--pixel) 0 0 var(--fc),
+    calc(var(--pixel) * -1) 0 0 0 var(--fc),
+    var(--pixel) 0 0 0 var(--fc);
+}
+
+.micro {
+  font-family: var(--font-pixel), monospace;
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: 72px;
+  background: linear-gradient(var(--bg) 70%, rgba(27, 25, 26, 0));
+}
+.header-inner {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  justify-self: start;
+}
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  color: var(--fg);
+}
+.logo-text {
+  font-family: var(--font-pixel), monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.logo-text span {
+  color: var(--accent-light);
+}
+
+.header-nav {
+  display: flex;
+  gap: 8px;
+}
+.header-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-dim);
+  box-shadow: inset 0 -2px 0 0 transparent;
+  transition:
+    color 0.2s,
+    box-shadow 0.2s;
+}
+.header-nav a:hover {
+  color: var(--fg);
+}
+.header-nav a[aria-current="true"] {
+  color: var(--fg);
+  box-shadow: inset 0 -2px 0 0 var(--accent);
+}
+.nav-idx {
+  font-family: var(--font-pixel), monospace;
+  font-size: 9px;
+  color: var(--accent-light);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-self: end;
+}
+
+.lang {
+  display: inline-flex;
+  --fc: var(--line-strong);
+  box-shadow:
+    0 -2px 0 0 var(--fc),
+    0 2px 0 0 var(--fc),
+    -2px 0 0 0 var(--fc),
+    2px 0 0 0 var(--fc);
+}
+.lang-btn {
+  width: 44px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-pixel), monospace;
+  font-size: 10px;
+  color: var(--fg-dim);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.lang-btn:hover {
+  color: var(--fg);
+}
+.lang-btn[aria-pressed="true"] {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* ==========================================================
+   BUTTONS — hover changes colors only, never position or size
+   ========================================================== */
+.btn {
+  --fc: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 24px;
+  border: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow:
+    0 -2px 0 0 var(--fc),
+    0 2px 0 0 var(--fc),
+    -2px 0 0 0 var(--fc),
+    2px 0 0 0 var(--fc),
+    inset 0 -4px 0 0 rgba(0, 0, 0, 0.22);
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+.btn-sm {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 13px;
+}
+
+.btn-primary {
+  --fc: var(--accent-light);
+  background: var(--accent);
+  color: var(--fg);
+}
+.btn-primary:hover {
+  --fc: var(--fg);
+  background: var(--accent-hi);
+}
+
+.btn-ghost {
+  --fc: var(--line-strong);
+  background: transparent;
+  color: var(--fg);
+}
+.btn-ghost:hover {
+  --fc: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* ==========================================================
+   SCREENS
+   ========================================================== */
+.screen {
+  position: relative;
+  min-height: 100svh;
+  padding: 112px 0 80px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-pixel), monospace;
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+.eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+}
+
+/* ----- HERO ----- */
+.hero-grid {
+  display: grid;
+  gap: var(--gap);
+  align-items: stretch;
+  align-content: center;
+  min-height: calc(100svh - 192px);
+}
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between; /* первый элемент на верхней линии, кнопки на нижней */
+  gap: 24px;
+  max-width: none;
+  min-width: 0;
+}
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(2.75rem, 6.2vw, 5.25rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.hero-title > span:first-child {
+  color: var(--accent-light);
+}
+.title-dot {
+  display: inline-block;
+  width: 0.2em;
+  height: 0.2em;
+  margin-left: 0.08em;
+  background: var(--accent);
+}
+.hero-tagline {
+  max-width: 34ch;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  color: var(--fg-dim);
+}
+
+.player-card {
+  --fc: var(--line);
+  width: 100%;
+  display: grid;
+  gap: 8px;
+  padding: 20px 24px;
+  background: var(--bg-2);
+}
+.player-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.player-bio {
+  padding-top: 12px;
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+  font-size: 0.95rem;
+  color: var(--fg-dim);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hero-visual {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+}
+.scene-frame {
+  --fc: var(--line-strong);
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+.scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  /* на десктопе рамка растягивается на всю высоту текстовой колонки */
+  .hero-visual .scene-frame {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 420px;
+  }
+}
+
+/* ----- ACHIEVEMENTS ----- */
+.ach-head {
+  display: grid;
+  gap: var(--gap);
+  align-items: stretch;
+}
+.ach-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+.ach-title {
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.ach-universe {
+  font-family: var(--font-pixel), monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+.ach-caption {
+  max-width: 40ch;
+  font-size: 1.1rem;
+  color: var(--fg-dim);
+}
+.ach-visual {
+  --fc: var(--line-strong);
+  width: 100%;
+  aspect-ratio: 160 / 64;
+  overflow: hidden;
+  background: var(--bg-2);
+}
+
+@media (min-width: 1024px) {
+  .ach-head {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .ach-visual {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 260px;
+  }
+}
+
+/* legend / counters */
+.legend {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: var(--gap-y);
+}
+.legend-item {
+  --fc: var(--line);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 0 16px;
+  background: var(--bg-2);
+}
+.legend-item[data-status="unlocked"] {
+  --fc: var(--accent);
+}
+.legend-item[data-status="unlocked"] .legend-icon {
+  color: var(--fg);
+  background: var(--accent);
+}
+.legend-item[data-status="in-progress"] .legend-icon {
+  color: var(--accent-light);
+  background: rgba(148, 58, 31, 0.3);
+}
+.legend-item[data-status="locked"] .legend-icon {
+  color: var(--fg-mute);
+  background: var(--bg-3);
+}
+.legend-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+}
+.legend-label {
+  font-family: var(--font-pixel), monospace;
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.legend-count {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.demo-note {
+  margin-top: var(--gap-y);
+  padding: 10px 14px;
+  border-left: 2px solid var(--accent);
+  background: rgba(148, 58, 31, 0.12);
+  font-size: 0.85rem;
+  color: var(--fg-dim);
+}
+
+/* categories */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  grid-auto-rows: 1fr; /* все блоки категорий одной высоты */
+  gap: var(--gap-y);
+  margin-top: var(--gap-y);
+  align-items: stretch;
+}
+.cat {
+  --fc: var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg-2);
+}
+.cat-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  height: calc(2.6rem + 16px); /* место под две строки: заголовки всех категорий одной высоты */
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.cat-idx {
+  font-family: var(--font-pixel), monospace;
+  font-size: 10px;
+  color: var(--accent-light);
+}
+.cat-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cat-count {
+  font-family: var(--font-pixel), monospace;
+  font-size: 10px;
+  color: var(--fg-mute);
+}
+.skill-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: var(--skill-h);
+  gap: 16px;
+}
+.skill-list > li {
+  display: flex;
+  min-width: 0;
+}
+
+/* на широких экранах — ровно 3 колонки одинаковой ширины */
+@media (min-width: 1100px) {
+  .cat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================
+   SKILL CARD — three states, each with icon + text (not only color)
+   ========================================================== */
+.skill {
+  --fc: var(--line);
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: var(--skill-h);
+  min-height: var(--skill-h);
+  padding: 8px 12px 8px 8px;
+  border: 0;
+  text-align: left;
+  background: var(--bg-3);
+  box-shadow:
+    0 -2px 0 0 var(--fc),
+    0 2px 0 0 var(--fc),
+    -2px 0 0 0 var(--fc),
+    2px 0 0 0 var(--fc);
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s,
+    color 0.2s;
+}
+.skill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  opacity: 0;
+  pointer-events: none;
+}
+.skill-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+}
+.mono {
+  font-family: var(--font-pixel), monospace;
+  font-size: 9px;
+  letter-spacing: 0;
+}
+.skill-text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.skill-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.skill-status {
+  font-family: var(--font-pixel), monospace;
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.skill-mark {
+  display: grid;
+  place-items: center;
+}
+
+/* A — UNLOCKED: bright terracotta, light details, glow */
+.skill[data-status="unlocked"] {
+  --fc: var(--accent-light);
+  background: var(--accent);
+  color: var(--fg);
+  box-shadow:
+    0 -2px 0 0 var(--fc),
+    0 2px 0 0 var(--fc),
+    -2px 0 0 0 var(--fc),
+    2px 0 0 0 var(--fc),
+    0 0 20px 0 var(--glow),
+    inset 0 -4px 0 0 rgba(0, 0, 0, 0.2);
+}
+.skill[data-status="unlocked"] .skill-icon {
+  background: var(--fg);
+  color: var(--accent);
+}
+.skill[data-status="unlocked"] .skill-status {
+  color: rgba(233, 228, 224, 0.9);
+}
+.skill[data-status="unlocked"]:hover {
+  --fc: var(--fg);
+  background: var(--accent-hi);
+  box-shadow:
+    0 -2px 0 0 var(--fc),
+    0 2px 0 0 var(--fc),
+    -2px 0 0 0 var(--fc),
+    2px 0 0 0 var(--fc),
+    0 0 28px 2px var(--glow),
+    inset 0 -4px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+/* B — IN PROGRESS: muted terracotta, partially highlighted frame */
+.skill[data-status="in-progress"] {
+  background: rgba(148, 58, 31, 0.18);
+  box-shadow:
+    0 -2px 0 0 var(--accent),
+    -2px 0 0 0 var(--accent),
+    0 2px 0 0 var(--line-strong),
+    2px 0 0 0 var(--line-strong);
+}
+.skill[data-status="in-progress"] .skill-icon {
+  background: rgba(148, 58, 31, 0.38);
+  color: var(--accent-light);
+}
+.skill[data-status="in-progress"] .skill-status,
+.skill[data-status="in-progress"] .skill-mark {
+  color: var(--accent-light);
+}
+.skill[data-status="in-progress"]:hover {
+  background: rgba(148, 58, 31, 0.3);
+  box-shadow:
+    0 -2px 0 0 var(--accent-light),
+    -2px 0 0 0 var(--accent-light),
+    0 2px 0 0 var(--fg-mute),
+    2px 0 0 0 var(--fg-mute);
+}
+
+/* C — LOCKED: graphite, lock icon, no glow */
+.skill[data-status="locked"] {
+  --fc: var(--line);
+  background: #201d1e;
+  color: var(--fg-dim);
+}
+.skill[data-status="locked"] .skill-icon {
+  background: var(--bg-3);
+  color: var(--fg-mute);
+}
+.skill[data-status="locked"] .skill-status,
+.skill[data-status="locked"] .skill-mark {
+  color: var(--fg-mute);
+}
+.skill[data-status="locked"]:hover {
+  --fc: var(--line-strong);
+  background: var(--bg-3);
+  color: var(--fg);
+}
+
+/* one-time unlock flash, staggered */
+.skill.reveal[data-status="unlocked"]::after {
+  animation: unlock-flash 0.8s steps(5, end) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+@keyframes unlock-flash {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.38;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ==========================================================
+   MODAL
+   ========================================================== */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+.modal {
+  --fc: var(--line-strong);
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(86svh, 720px);
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  background: #211e1f;
+  color: var(--fg);
+  box-shadow:
+    0 -2px 0 0 var(--fc),
+    0 2px 0 0 var(--fc),
+    -2px 0 0 0 var(--fc),
+    2px 0 0 0 var(--fc);
+}
+.modal[data-status="unlocked"] {
+  --fc: var(--accent-light);
+}
+.modal[data-status="in-progress"] {
+  --fc: var(--accent);
+}
+.modal[open] {
+  animation: modal-in 0.28s steps(6, end);
+}
+.modal::backdrop {
+  background: rgba(27, 25, 26, 0.82);
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    clip-path: inset(46% 0 46% 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+
+.modal-inner {
+  display: grid;
+}
+.modal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 12px 12px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  padding: 0 12px;
+  font-family: var(--font-pixel), monospace;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.modal[data-status="unlocked"] .badge {
+  background: var(--accent);
+  color: var(--fg);
+}
+.modal[data-status="in-progress"] .badge {
+  background: rgba(148, 58, 31, 0.3);
+  color: var(--accent-light);
+}
+.modal[data-status="locked"] .badge {
+  background: var(--bg-3);
+  color: var(--fg-dim);
+}
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: var(--fg-dim);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.icon-btn:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.modal-body {
+  display: grid;
+  gap: 24px;
+  padding: 24px 20px;
+}
+.modal-head {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+.modal-icon {
+  width: 64px;
+  height: 64px;
+}
+.modal-icon .mono {
+  font-size: 11px;
+}
+.modal[data-status="unlocked"] .modal-icon {
+  background: var(--fg);
+  color: var(--accent);
+  box-shadow: 0 0 24px 0 var(--glow);
+}
+.modal[data-status="in-progress"] .modal-icon {
+  background: rgba(148, 58, 31, 0.38);
+  color: var(--accent-light);
+}
+.modal[data-status="locked"] .modal-icon {
+  background: var(--bg-3);
+  color: var(--fg-mute);
+}
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.modal-cat {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--fg-mute);
+}
+
+.facts {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.fact {
+  display: grid;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.fact dd {
+  font-size: 0.98rem;
+  color: var(--fg);
+}
+.fact dd.is-placeholder {
+  color: var(--fg-mute);
+  font-style: italic;
+}
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px 20px;
+}
+
+@media (min-width: 560px) {
+  .fact {
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+
+/* unlock burst in the modal (once) */
+.burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.burst i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-light);
+  animation: burst 0.6s steps(5, end) 0.12s both;
+}
+@keyframes burst {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateX(24px);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateX(60px);
+  }
+}
+
+/* ==========================================================
+   PROJECTS — quest log: paper "case file" cards on a pixel rail
+   ========================================================== */
+.projects-head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.quest {
+  --rail-w: 4px;
+  --node: 44px;
+  position: relative;
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: var(--gap-y);
+  margin: var(--gap-y) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.quest::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - var(--rail-w) / 2);
+  width: var(--rail-w);
+  background: repeating-linear-gradient(var(--accent) 0 8px, transparent 8px 16px);
+}
+.quest-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--node) minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--gap);
+}
+.quest-node {
+  grid-column: 2;
+  grid-row: 1;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--node);
+  height: var(--node);
+  background: var(--accent);
+  color: var(--fg);
+  font-family: var(--font-pixel), monospace;
+  font-size: 14px;
+  box-shadow:
+    0 -2px 0 0 var(--accent-light), 0 2px 0 0 var(--accent-light),
+    -2px 0 0 0 var(--accent-light), 2px 0 0 0 var(--accent-light),
+    0 0 0 8px var(--bg);
+}
+.quest-card {
+  grid-row: 1;
+  align-self: stretch;
+  min-width: 0;
+  height: 100%;
+  perspective: 1400px;
+  cursor: default;
+}
+.quest-item:nth-child(odd) .quest-card { grid-column: 1; }
+.quest-item:nth-child(even) .quest-card { grid-column: 3; }
+.quest-card:focus-visible { outline-offset: 8px; }
+
+.quest-flip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.9s cubic-bezier(0.45, 0.05, 0.25, 1);
+}
+.quest-face {
+  --fc: var(--accent);
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0.1px);
+}
+.quest-front {
+  background: var(--fg);
+  color: var(--bg);
+}
+.quest-back {
+  --fc: var(--accent-light);
+  gap: 12px;
+  padding: 24px;
+  background: var(--accent-deep);
+  color: var(--fg);
+  transform: rotateY(180deg) translateZ(0.1px);
+}
+.quest-card.is-flipped .quest-flip { transform: rotateY(180deg); }
+@media (hover: hover) {
+  .quest-card:hover .quest-flip { transform: rotateY(180deg); }
+}
+.quest-card:focus-visible .quest-flip { transform: rotateY(180deg); }
+
+/* front: picture + title only */
+.quest-art {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 170px;
+  padding: 16px;
+  background: var(--bg);
+  border-bottom: 4px solid var(--accent);
+}
+.quest-art svg {
+  width: 100%;
+  height: 100%;
+  max-height: 260px;
+}
+.quest-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+}
+.quest-title {
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.quest-flip-icon {
+  flex: none;
+  color: var(--accent);
+}
+
+/* back: details */
+.quest-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.quest-stage {
+  font-family: var(--font-pixel), monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+.quest-type {
+  padding: 3px 8px;
+  border: 2px solid var(--accent-light);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.quest-back .quest-title { font-size: clamp(1.1rem, 1.6vw, 1.4rem); }
+.quest-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--fg-dim);
+}
+.quest-facts {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 2px dashed rgba(233, 228, 224, 0.28);
+}
+.quest-facts dt {
+  font-family: var(--font-pixel), monospace;
+  font-size: 8px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+.quest-facts dd {
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+.quest-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.quest-tools li {
+  padding: 2px 8px;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 899px) {
+  .quest { --node: 36px; }
+  .quest::before { left: calc(var(--node) / 2 - var(--rail-w) / 2); }
+  .quest-item { grid-template-columns: var(--node) minmax(0, 1fr); column-gap: 20px; }
+  .quest-node { grid-column: 1; align-self: start; font-size: 11px; }
+  .quest-item:nth-child(odd) .quest-card,
+  .quest-item:nth-child(even) .quest-card { grid-column: 2; }
+}
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 40px;
+  background: var(--bg-2);
+}
+.footer-ground {
+  height: 24px;
+  background-color: var(--accent-lo);
+  background-image:
+    linear-gradient(var(--accent-deep) 2px, transparent 2px),
+    linear-gradient(90deg, var(--accent-deep) 2px, transparent 2px);
+  background-size: 100% 8px, 32px 8px;
+  border-top: 4px solid var(--accent);
+}
+/* one shared 3-column grid for the panels and the bottom row */
+.footer-main,
+.footer-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-y) var(--gap);
+}
+.footer-main {
+  align-items: stretch;
+}
+.site-footer .footer-main {
+  padding-top: 48px;
+  padding-bottom: clamp(48px, 6vw, 72px);
+}
+.footer-brand,
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+.footer-tagline {
+  max-width: 38ch;
+  font-size: 1rem;
+  color: var(--fg-dim);
+}
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  font-weight: 700;
+  color: var(--fg-dim);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--fg); }
+.footer-bottom {
+  align-items: center;
+  justify-items: start;
+}
+.site-footer .footer-bottom {
+  padding-top: 0;
+  padding-bottom: 24px;
+}
+.footer-bottom p,
+.footer-top { margin: 0; }
+.footer-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-light);
+  transition: color 0.2s;
+}
+.footer-top svg { width: 10px; height: 10px; }
+.footer-top:hover { color: var(--fg); }
+@media (min-width: 768px) {
+  .footer-main,
+  .footer-bottom { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  .footer-main > :nth-child(1) { justify-self: start; align-items: flex-start; text-align: left; }
+  .footer-main > :nth-child(2) { justify-self: center; align-items: center; text-align: center; }
+  .footer-main > :nth-child(3) { justify-self: end; align-items: flex-end; text-align: right; }
+  .footer-main > :nth-child(2) .footer-links { align-items: center; }
+  .footer-bottom > :nth-child(1) { justify-self: start; }
+  .footer-bottom > :nth-child(2) { justify-self: center; }
+  .footer-bottom > :nth-child(3) { justify-self: end; }
+}
+@media (max-width: 767px) {
+  .site-footer { padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
+}
+
+/* ==========================================================
+   COIN RAIN (click on the hero character)
+   ========================================================== */
+.hero-hit {
+  cursor: pointer;
+  outline-offset: 0;
+}
+.hero-hit:focus-visible {
+  outline: 2px solid var(--fg);
+}
+.coin-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+.coin {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  width: var(--s);
+  height: var(--s);
+  transform: translateY(-48px);
+  animation: coin-fall var(--d) cubic-bezier(0.45, 0, 0.9, 0.7) var(--delay) both;
+}
+.coin svg {
+  width: 100%;
+  height: 100%;
+  animation: coin-spin 0.56s steps(1, end) infinite;
+}
+@keyframes coin-fall {
+  from { transform: translateY(-48px); }
+  to { transform: translateY(var(--fall)); }
+}
+@keyframes coin-spin {
+  0%, 45% { transform: scaleX(1); }
+  55% { transform: scaleX(0.55); }
+  65% { transform: scaleX(0.25); }
+  75% { transform: scaleX(0.55); }
+  85%, 100% { transform: scaleX(1); }
+}
+
+/* ==========================================================
+   MOBILE TAB BAR
+   ========================================================== */
+.tabbar {
+  display: none;
+}
+
+/* ==========================================================
+   PIXEL CHARACTER ANIMATION
+   ========================================================== */
+.legs-a,
+.legs-b {
+  visibility: hidden;
+}
+.sprite-bob {
+  animation: bob 1.6s steps(1, end) infinite;
+}
+@keyframes bob {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+/* walking: legs alternate, idle legs hidden */
+.walking .legs-idle {
+  visibility: hidden;
+}
+.walking .legs-a {
+  animation: leg-a 0.36s steps(1, end) infinite;
+}
+.walking .legs-b {
+  animation: leg-b 0.36s steps(1, end) infinite;
+}
+.walking .sprite-bob {
+  animation-duration: 0.36s;
+}
+@keyframes leg-a {
+  0% {
+    visibility: visible;
+  }
+  50% {
+    visibility: hidden;
+  }
+}
+@keyframes leg-b {
+  0% {
+    visibility: hidden;
+  }
+  50% {
+    visibility: visible;
+  }
+}
+
+/* hero: walks to the right when "Explore" is pressed */
+.hero-scene.walking .hero-char {
+  animation: walk-out 1s steps(14, end) forwards;
+}
+@keyframes walk-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(26px);
+  }
+}
+
+/* hover frame around the hero character (opacity only) */
+.hover-frame {
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.hero-scene:hover .hover-frame {
+  opacity: 1;
+}
+
+/* achievements: walks in from the left once */
+.ach-scene.phase-before .ach-char {
+  transform: translateX(-120px);
+}
+.ach-scene.phase-walking .ach-char {
+  animation: walk-in 1.8s steps(30, end) forwards;
+}
+@keyframes walk-in {
+  from {
+    transform: translateX(-120px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 1023px) {
+  .header-nav a {
+    padding: 0 10px;
+  }
+  .header-cv {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .site-header {
+    height: 64px;
+  }
+  .header-inner {
+    grid-template-columns: 1fr auto;
+  }
+  .header-nav {
+    display: none;
+  }
+  .wrap {
+    padding: 0 16px;
+  }
+  .screen {
+    padding: 96px 0 112px;
+  }
+  .hero-grid {
+    min-height: 0;
+    gap: 32px;
+  }
+  .hero-copy {
+    justify-content: flex-start;
+  }
+  .hero-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+  .hero-actions .btn {
+    width: 100%;
+  }
+  .legend {
+    gap: 8px;
+  }
+  .legend-item {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 8px;
+    padding: 12px;
+  }
+  .legend-label {
+    font-size: 8px;
+  }
+  .tabbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--bg);
+    border-top: 1px solid var(--line-strong);
+  }
+  .tabbar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 56px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--fg-dim);
+    box-shadow: inset 0 3px 0 0 transparent;
+  }
+  .tabbar a[aria-current="true"] {
+    color: var(--fg);
+    box-shadow: inset 0 3px 0 0 var(--accent);
+  }
+}
+
+@media (max-width: 380px) {
+  .skill {
+    grid-template-columns: 44px minmax(0, 1fr) 16px;
+    gap: 10px;
+  }
+  .skill-icon {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ==========================================================
+   REDUCED MOTION — no animation, no smooth scroll
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .ach-scene .ach-char {
+    transform: none !important;
+  }
+  .walking .legs-idle {
+    visibility: visible;
+  }
+  .walking .legs-a,
+  .walking .legs-b {
+    visibility: hidden;
+  }
+}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#profile" data-i18n="skip"></a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="#profile" aria-label="PIXEL.BA">
+      <span class="logo-mark" aria-hidden="true" data-glyph="logoP" data-scale="4"></span>
+      <span class="logo-text">PIXEL<span>.BA</span></span>
+    </a>
+
+    <nav class="header-nav" data-i18n-aria="nav.main">
+      <a href="#profile" data-nav="profile"><span class="nav-idx">01</span><span data-i18n="nav.profile"></span></a>
+      <a href="#achievements" data-nav="achievements"><span class="nav-idx">02</span><span data-i18n="nav.achievements"></span></a>
+      <a href="#projects" data-nav="projects"><span class="nav-idx">03</span><span data-i18n="nav.projects"></span></a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang" role="group" data-i18n-aria="langAria">
+        <button type="button" class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+      </div>
+      <a class="btn btn-ghost btn-sm header-cv" data-cv download="cv.pdf">
+        <span data-glyph="download" data-scale="2"></span><span data-i18n="cv"></span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="profile" class="screen hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow"></span></p>
+
+        <h1 id="hero-title" class="hero-title">
+          <span data-i18n="hero.title1"></span>
+          <span><span data-i18n="hero.title2"></span></span>
+        </h1>
+
+        <p class="hero-tagline" data-i18n="hero.tagline"></p>
+
+        <div class="player-card px">
+          <p class="micro" data-i18n="hero.player"></p>
+          <p class="player-name" data-cand="name"></p>
+          <p class="player-bio" data-cand="bio"></p>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="explore" href="#achievements" data-i18n="hero.explore"></a>
+          <a class="btn btn-ghost" data-cv download="cv.pdf">
+            <span data-glyph="download" data-scale="2"></span><span data-i18n="cv"></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="scene-frame px" id="hero-scene"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="achievements" class="screen achievements" aria-labelledby="ach-title">
+    <div class="wrap">
+      <div class="ach-head">
+        <div class="ach-copy">
+          <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="ach.eyebrow"></span></p>
+          <h2 id="ach-title" class="ach-title" data-i18n="ach.title"></h2>
+          <p class="ach-universe" data-i18n="ach.universe"></p>
+          <p class="ach-caption" data-i18n="ach.caption"></p>
+        </div>
+        <div class="ach-visual px" id="ach-scene"></div>
+      </div>
+
+      <ul class="legend" id="legend" data-i18n-aria="ach.legend"></ul>
+
+      <p class="demo-note" id="demo-note" data-i18n="ach.demo"></p>
+
+      <div class="cat-grid" id="cat-grid"></div>
+    </div>
+
+    <dialog class="modal" id="modal" aria-labelledby="skill-modal-title"></dialog>
+  </section>
+
+  <section id="projects" class="screen projects" aria-labelledby="proj-title">
+    <div class="wrap">
+      <div class="projects-head">
+        <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="proj.eyebrow"></span></p>
+        <h2 id="proj-title" class="ach-title" data-i18n="proj.title"></h2>
+        <p class="ach-universe" data-i18n="proj.universe"></p>
+        <p class="ach-caption" data-i18n="proj.caption"></p>
+      </div>
+      <ol class="quest" id="quest"></ol>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-ground" aria-hidden="true"></div>
+  <div class="wrap footer-main">
+    <div class="footer-brand">
+      <p class="micro" data-i18n="footer.about"></p>
+      <a class="logo" href="#profile" aria-label="PIXEL.BA">
+        <span class="logo-mark" aria-hidden="true" data-glyph="logoP" data-scale="4"></span>
+        <span class="logo-text">PIXEL<span>.BA</span></span>
+      </a>
+      <p class="footer-tagline" data-i18n="hero.tagline"></p>
+    </div>
+    <div class="footer-col">
+      <p class="micro" data-i18n="footer.nav"></p>
+      <nav class="footer-links" data-i18n-aria="nav.main">
+        <a href="#profile"><span class="nav-idx">01</span><span data-i18n="nav.profile"></span></a>
+        <a href="#achievements"><span class="nav-idx">02</span><span data-i18n="nav.achievements"></span></a>
+        <a href="#projects"><span class="nav-idx">03</span><span data-i18n="nav.projects"></span></a>
+      </nav>
+    </div>
+    <div class="footer-col">
+      <p class="micro" data-i18n="footer.cv"></p>
+      <a class="btn btn-ghost btn-sm" data-cv download="cv.pdf">
+        <span data-glyph="download" data-scale="2"></span><span data-i18n="cv"></span>
+      </a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <p class="micro">© <span id="footer-year"></span> <span data-cand="name"></span></p>
+    <p class="micro" data-i18n="footer.built"></p>
+    <a class="micro footer-top" href="#profile">
+      <svg viewBox="0 0 9 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><rect x="4" y="0" width="1" height="1"/><rect x="3" y="1" width="3" height="1"/><rect x="2" y="2" width="5" height="1"/><rect x="4" y="3" width="1" height="6"/></svg>
+      <span data-i18n="footer.top"></span>
+    </a>
+  </div>
+</footer>
+
+<nav class="tabbar" data-i18n-aria="nav.tabs">
+  <a href="#profile" data-nav="profile"><span class="nav-idx">01</span><span data-i18n="nav.profile"></span></a>
+  <a href="#achievements" data-nav="achievements"><span class="nav-idx">02</span><span data-i18n="nav.achievements"></span></a>
+  <a href="#projects" data-nav="projects"><span class="nav-idx">03</span><span data-i18n="nav.projects"></span></a>
+</nav>
+
+<script>
+(function () {
+"use strict";
+
+/* ==========================================================
+   CONFIG — edit here (was: src/config/*)
+   ========================================================== */
+
+/** Candidate data. PLACEHOLDERS — replace with real data. */
+var candidate = {
+  name: { ru: "Сазонов Андрей", en: "Andrey Sazonov" },
+  bio: {
+    ru: "Junior-аналитик, который любит разбираться в задачах и превращать их в ясные требования и схемы процессов",
+    en: "Junior analyst who enjoys digging into problems and turning them into clear requirements and process models"
+  },
+
+
+  // Replace with a real URL (e.g. "cv.pdf") if you keep the resume next to this file.
+  // By default a tiny placeholder PDF is embedded so the button works offline.
+  cvUrl: "data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1OTUgODQyXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAwIFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA4NiA+PgpzdHJlYW0KQlQgL0YxIDIwIFRmIDcyIDc2MCBUZCAoQ1YgcGxhY2Vob2xkZXIgLSByZXBsYWNlIHB1YmxpYy9jdi5wZGYgd2l0aCB5b3VyIHJlc3VtZSkgVGogRVQKZW5kc3RyZWFtCmVuZG9iago1IDAgb2JqCjw8IC9UeXBlIC9Gb250IC9TdWJ0eXBlIC9UeXBlMSAvQmFzZUZvbnQgL0hlbHZldGljYSA+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAowMDAwMDAwMjQxIDAwMDAwIG4gCjAwMDAwMDAzNzcgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo0NDcKJSVFT0YK"
+};
+
+/**
+ * SKILL STATUSES — the single place to edit your progress.
+ * "unlocked" | "in-progress" | "locked". Missing skills are "locked".
+ * Optional details for the popup: unlocked: example, project;
+ * in-progress: studying, next; locked: goal  (each as {ru, en}).
+ * All values are DEMO PLACEHOLDERS. Set real ones, then STATUS_DEMO = false.
+ */
+var STATUS_DEMO = false;
+var skillProgress = {
+  "stakeholder-analysis": { status: "unlocked" },
+  "business-case": { status: "locked" },
+  "user-stories": { status: "unlocked" },
+  "use-cases": { status: "unlocked" },
+
+  "elicitation": { status: "in-progress" },
+  "functional-req": { status: "in-progress" },
+  "non-functional-req": { status: "locked" },
+  "acceptance-criteria": { status: "locked" },
+
+  "bpmn": { status: "unlocked" },
+  "uml": { status: "in-progress" },
+  "process-mapping": { status: "locked" },
+  "as-is-to-be": { status: "locked" },
+
+  "sql": { status: "in-progress" },
+  "excel": { status: "unlocked" },
+  "data-viz": { status: "in-progress" },
+
+  "jira": { status: "unlocked" },
+  "confluence": { status: "in-progress" },
+  "drawio": { status: "locked" },
+
+  "stakeholder-comm": { status: "locked" },
+  "workshops": { status: "locked" },
+  "documentation": { status: "unlocked" }
+};
+
+/* ---------- i18n dictionaries ---------- */
+var dictionaries = {
+  en: {
+    skip: "Skip to content",
+    nav: { main: "Main navigation", tabs: "Screens", profile: "Profile", achievements: "Achievements", projects: "Projects" },
+    langAria: "Language",
+    cv: "Download CV",
+    hero: {
+      eyebrow: "Level 01 · Profile",
+      title1: "Junior",
+      title2: "Business Analyst",
+      tagline: "I turn business challenges into structured solutions",
+      player: "Player name",
+      explore: "Explore Achievements",
+      coinsAria: "Make coins rain",
+      sceneAlt: "Pixel illustration of a business analyst character standing on a platform"
+    },
+    ach: {
+      eyebrow: "Level 02 · Skills",
+      title: "Achievements",
+      universe: "My skill universe",
+      caption: "Every skill unlocked is another step forward",
+      sceneAlt: "Pixel illustration of the character with a laptop next to a staircase of blocks",
+      legend: "Skill status summary",
+      demo: "Placeholder statuses — set your real ones in skillProgress inside this file"
+    },
+    proj: {
+      eyebrow: "Level 03 · Projects",
+      title: "Projects",
+      universe: "My quest log",
+      caption: "Every case is a stage cleared",
+      stage: "Stage",
+      flip: "Details",
+      tools: "Tools",
+      result: "Result",
+      items: [
+        { type: "Course case · Business analysis", title: "Bank support story map",
+          desc: "User story map for the support service of the bank Sberegai, built to raise CSAT to 8 out of 10",
+          result: "Three personas, activities, tasks and stories, AS-IS problems and blind spots" },
+        { type: "Course case · Process modeling", title: "TO-BE process in BPMN",
+          desc: "Target support process based on the story map, competitor analysis and the proposed improvements",
+          result: "Pools for the client and the support service with chatbot and operator lanes, an inclusive gateway for channel choice, feedback collected from all channels" },
+        { type: "Web project · Content page", title: "Digital literacy site: News page",
+          desc: "News and Insights page for an educational site about digital literacy and cybersecurity for teens, adults and seniors",
+          result: "English and Russian versions, filters All, Belarus and International, nine news cards with Load more" },
+        { type: "Personal project", title: "PIXEL.BA portfolio",
+          desc: "This portfolio: a pixel-style achievement system for skills in a single HTML file",
+          result: "English and Russian versions, responsive layout, skill cards with details" }
+      ]
+    },
+    footer: { about: "Portfolio", nav: "Navigation", cv: "Resume", built: "Built from pixels", top: "Back to top" },
+    status: { unlocked: "Unlocked", progress: "In progress", locked: "Locked" },
+    modal: {
+      close: "Close", category: "Category", about: "About", example: "Practical example",
+      project: "Related project", studying: "Studying", next: "Next step", why: "Why it matters",
+      goal: "Learning goal",
+      placeholderExample: "Placeholder — add a real example in skillProgress inside this file",
+      placeholderProject: "No project linked yet",
+      defaultNext: "Practice on a small real-world case and document the result",
+      defaultGoal: "Learn the fundamentals and apply them in a practice case"
+    },
+    categories: {
+      ba: "Business Analysis", req: "Requirements Engineering", process: "Process Modeling",
+      data: "Data Analysis", tools: "Tools & Technologies", comm: "Communication & Collaboration"
+    }
+  },
+  ru: {
+    skip: "Перейти к содержимому",
+    nav: { main: "Основная навигация", tabs: "Экраны", profile: "Профиль", achievements: "Достижения", projects: "Проекты" },
+    langAria: "Язык",
+    cv: "Скачать резюме",
+    hero: {
+      eyebrow: "Уровень 01 · Профиль",
+      title1: "Junior",
+      title2: "Business Analyst",
+      tagline: "Превращаю бизнес-задачи в структурированные решения",
+      player: "Имя игрока",
+      explore: "Смотреть достижения",
+      coinsAria: "Посыпать монетками",
+      sceneAlt: "Пиксельная иллюстрация: персонаж бизнес-аналитик стоит на платформе"
+    },
+    ach: {
+      eyebrow: "Уровень 02 · Навыки",
+      title: "Достижения",
+      universe: "Моя вселенная навыков",
+      caption: "Каждый открытый навык — ещё один шаг вперёд",
+      sceneAlt: "Пиксельная иллюстрация: персонаж с ноутбуком рядом с лестницей из блоков",
+      legend: "Сводка по статусам навыков",
+      demo: "Статусы-заглушки — укажите свои в skillProgress внутри этого файла"
+    },
+    proj: {
+      eyebrow: "Уровень 03 · Проекты",
+      title: "Проекты",
+      universe: "Мой журнал квестов",
+      caption: "Каждый кейс — пройденный этап",
+      stage: "Этап",
+      flip: "Подробнее",
+      tools: "Инструменты",
+      result: "Результат",
+      items: [
+        { type: "Учебный кейс · Бизнес-анализ", title: "Карта историй службы поддержки",
+          desc: "Карта пользовательских историй для службы поддержки банка «Сберегай» с целью повысить CSAT до 8 из 10",
+          result: "Три персоны, активности, задачи и истории, проблемы AS-IS и слепые зоны" },
+        { type: "Учебный кейс · Моделирование процессов", title: "Процесс TO-BE в BPMN",
+          desc: "Целевой процесс поддержки на основе карты историй, анализа конкурентов и предложенных улучшений",
+          result: "Пулы клиента и службы поддержки с дорожками чат-бота и оператора, инклюзивный шлюз выбора канала, сбор обратной связи со всех каналов" },
+        { type: "Веб-проект · Контентная страница", title: "Сайт по цифровой грамотности: страница News",
+          desc: "Страница News and Insights для образовательного сайта о цифровой грамотности и кибербезопасности для подростков, взрослых и старшего поколения",
+          result: "Версии на английском и русском, фильтры All, Belarus и International, девять карточек новостей с кнопкой Load more" },
+        { type: "Личный проект", title: "Портфолио PIXEL.BA",
+          desc: "Это портфолио: пиксельная система достижений для навыков в одном HTML-файле",
+          result: "Версии на английском и русском, адаптивная вёрстка, карточки навыков с подробностями" }
+      ]
+    },
+    footer: { about: "Портфолио", nav: "Навигация", cv: "Резюме", built: "Сделано из пикселей", top: "Наверх" },
+    status: { unlocked: "Открыто", progress: "Изучается", locked: "Закрыто" },
+    modal: {
+      close: "Закрыть", category: "Категория", about: "О навыке", example: "Пример применения",
+      project: "Связанный проект", studying: "Что изучается", next: "Следующий шаг", why: "Почему это важно",
+      goal: "Цель обучения",
+      placeholderExample: "Заглушка — добавьте реальный пример в skillProgress внутри этого файла",
+      placeholderProject: "Проект пока не указан",
+      defaultNext: "Отработать на небольшом практическом кейсе и описать результат",
+      defaultGoal: "Освоить основы и применить их на учебном кейсе"
+    },
+    categories: {
+      ba: "Бизнес-анализ", req: "Работа с требованиями", process: "Моделирование процессов",
+      data: "Анализ данных", tools: "Инструменты и технологии", comm: "Коммуникации и командная работа"
+    }
+  }
+};
+
+/* ---------- skill catalog ---------- */
+var CATEGORIES = [
+  { id: "ba", name: { en: "Business Analysis", ru: "Бизнес-анализ" } },
+  { id: "req", name: { en: "Requirements Engineering", ru: "Работа с требованиями" } },
+  { id: "process", name: { en: "Process Modeling", ru: "Моделирование процессов" } },
+  { id: "data", name: { en: "Data Analysis", ru: "Анализ данных" } },
+  { id: "tools", name: { en: "Tools & Technologies", ru: "Инструменты и технологии" } },
+  { id: "comm", name: { en: "Communication & Collaboration", ru: "Коммуникации и командная работа" } }
+];
+
+function same(v) { return { en: v, ru: v }; }
+
+var SKILLS = [
+  // Business Analysis
+  { id: "stakeholder-analysis", category: "ba", mono: "STK", name: same("Stakeholder Analysis"),
+    desc: { en: "Identifying stakeholders and mapping their influence, interest and expectations", ru: "Выявление стейкхолдеров и оценка их влияния, интереса и ожиданий" },
+    why: { en: "Shows who shapes decisions and keeps requirements aligned with real needs", ru: "Помогает понять, кто влияет на решения, и согласовать требования с реальными потребностями" } },
+  { id: "business-case", category: "ba", mono: "BIZ", name: same("Business Case"),
+    desc: { en: "Describing a problem, options and expected value to support a decision", ru: "Описание проблемы, вариантов решения и ожидаемой ценности для принятия решения" },
+    why: { en: "Links a change to measurable business value", ru: "Связывает изменения с измеримой бизнес-ценностью" } },
+  { id: "user-stories", category: "ba", mono: "USR", name: same("User Stories"),
+    desc: { en: "Capturing needs as short stories: who needs what, and why", ru: "Фиксация потребностей в формате «кто, что и зачем»" },
+    why: { en: "Keeps the team focused on user value", ru: "Удерживает команду на ценности для пользователя" } },
+  { id: "use-cases", category: "ba", mono: "USE", name: same("Use Cases"),
+    desc: { en: "Describing step-by-step interaction between an actor and a system", ru: "Описание пошагового взаимодействия актора и системы" },
+    why: { en: "Covers main, alternative and error flows", ru: "Покрывает основной, альтернативный и ошибочный сценарии" } },
+
+  // Requirements Engineering
+  { id: "elicitation", category: "req", mono: "ELI", name: same("Requirements Elicitation"),
+    desc: { en: "Collecting needs through interviews, workshops and document analysis", ru: "Сбор потребностей через интервью, воркшопы и анализ документов" },
+    why: { en: "Good requirements start with the right questions", ru: "Качественные требования начинаются с правильных вопросов" } },
+  { id: "functional-req", category: "req", mono: "FR", name: same("Functional Requirements"),
+    desc: { en: "Specifying what the system must do", ru: "Описание того, что система должна делать" },
+    why: { en: "Gives developers and testers a clear target", ru: "Даёт разработчикам и тестировщикам ясную цель" } },
+  { id: "non-functional-req", category: "req", mono: "NFR", name: same("Non-functional Requirements"),
+    desc: { en: "Specifying quality attributes: performance, security, usability", ru: "Описание качеств системы: производительность, безопасность, удобство" },
+    why: { en: "Prevents surprises that feature lists miss", ru: "Помогает избежать неожиданностей, которые упускают списки функций" } },
+  { id: "acceptance-criteria", category: "req", mono: "AC", name: same("Acceptance Criteria"),
+    desc: { en: "Defining testable conditions under which work is accepted", ru: "Формулировка проверяемых условий приёмки работы" },
+    why: { en: "Turns expectations into checkable criteria", ru: "Превращает ожидания в проверяемые критерии" } },
+
+  // Process Modeling
+  { id: "bpmn", category: "process", mono: "BPMN", name: same("BPMN 2.0"),
+    desc: { en: "Modeling business processes in BPMN 2.0 notation", ru: "Моделирование бизнес-процессов в нотации BPMN 2.0" },
+    why: { en: "A shared visual language for business and IT", ru: "Общий визуальный язык для бизнеса и IT" } },
+  { id: "uml", category: "process", mono: "UML", name: same("UML"),
+    desc: { en: "Visual models of structure and behavior: use case, activity, sequence", ru: "Визуальные модели структуры и поведения: use case, activity, sequence" },
+    why: { en: "Makes system design understandable to the whole team", ru: "Делает устройство системы понятным всей команде" } },
+  { id: "process-mapping", category: "process", mono: "MAP", name: same("Process Mapping"),
+    desc: { en: "Mapping steps, roles and handoffs of a process", ru: "Построение карты шагов, ролей и передач в процессе" },
+    why: { en: "Reveals bottlenecks and gaps", ru: "Помогает увидеть узкие места и пробелы" } },
+  { id: "as-is-to-be", category: "process", mono: "A>B", name: same("As-Is / To-Be"),
+    desc: { en: "Comparing the current (as-is) and target (to-be) process", ru: "Сравнение текущего (as-is) и целевого (to-be) процесса" },
+    why: { en: "Turns analysis into a concrete improvement plan", ru: "Превращает анализ в конкретный план улучшений" } },
+
+  // Data Analysis
+  { id: "sql", category: "data", mono: "SQL", name: same("SQL"),
+    desc: { en: "Querying relational data to answer business questions", ru: "Запросы к реляционным данным для ответов на бизнес-вопросы" },
+    why: { en: "Lets an analyst verify facts without waiting for others", ru: "Позволяет аналитику самому проверять факты" } },
+  { id: "excel", category: "data", mono: "XLS", name: same("Excel"),
+    desc: { en: "Spreadsheets, formulas and pivot tables for analysis", ru: "Таблицы, формулы и сводные таблицы для анализа" },
+    why: { en: "The everyday tool for quick analysis", ru: "Повседневный инструмент быстрого анализа" } },
+  { id: "data-viz", category: "data", mono: "VIZ", name: same("Data Visualization"),
+    desc: { en: "Presenting data in clear charts and dashboards", ru: "Представление данных в понятных диаграммах и дашбордах" },
+    why: { en: "Helps decision makers see the point fast", ru: "Помогает руководителям быстро увидеть суть" } },
+
+  // Tools & Technologies
+  { id: "jira", category: "tools", mono: "JIRA", name: same("Jira"),
+    desc: { en: "Tracking tasks, backlogs and workflows", ru: "Ведение задач, бэклога и рабочих процессов" },
+    why: { en: "A standard tool for team delivery", ru: "Стандартный инструмент командной разработки" } },
+  { id: "confluence", category: "tools", mono: "CONF", name: same("Confluence"),
+    desc: { en: "Writing and organizing project documentation", ru: "Создание и структурирование проектной документации" },
+    why: { en: "Keeps knowledge in one findable place", ru: "Хранит знания в одном месте" } },
+  { id: "drawio", category: "tools", mono: "DRAW", name: same("draw.io"),
+    desc: { en: "Drawing diagrams, flows and wireframes", ru: "Создание диаграмм, схем и прототипов" },
+    why: { en: "Fast visual communication of ideas", ru: "Быстрая визуальная передача идей" } },
+
+  // Communication & Collaboration
+  { id: "stakeholder-comm", category: "comm", mono: "COM", name: { en: "Stakeholder Communication", ru: "Коммуникация со стейкхолдерами" },
+    desc: { en: "Explaining ideas clearly to technical and business audiences", ru: "Понятное объяснение идей техническим и бизнес-аудиториям" },
+    why: { en: "An analyst is a bridge between teams", ru: "Аналитик — мост между командами" } },
+  { id: "workshops", category: "comm", mono: "WRK", name: { en: "Workshop Facilitation", ru: "Проведение воркшопов" },
+    desc: { en: "Running meetings and workshops to reach agreement", ru: "Проведение встреч и воркшопов для достижения договорённостей" },
+    why: { en: "Moves a group from discussion to decisions", ru: "Переводит обсуждение в решения" } },
+  { id: "documentation", category: "comm", mono: "DOC", name: { en: "Documentation", ru: "Документирование" },
+    desc: { en: "Writing clear, structured documents others can use", ru: "Создание понятных структурированных документов" },
+    why: { en: "Good documents save time for the whole team", ru: "Хорошая документация экономит время всей команды" } }
+];
+
+/* ==========================================================
+   HELPERS
+   ========================================================== */
+function $(sel, root) { return (root || document).querySelector(sel); }
+function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+function range(n, step, start) {
+  step = step === undefined ? 1 : step;
+  start = start === undefined ? 0 : start;
+  var out = [];
+  for (var i = 0; i < n; i++) out.push(start + i * step);
+  return out;
+}
+function rect(x, y, w, h, fill, extra) {
+  return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"' +
+    (fill ? ' fill="' + fill + '"' : "") + (extra || "") + "/>";
+}
+
+/* ==========================================================
+   SKILL MODEL
+   ========================================================== */
+var skills = SKILLS.map(function (s) {
+  var progress = skillProgress[s.id] || { status: "locked" };
+  var view = {};
+  for (var k in s) view[k] = s[k];
+  view.status = progress.status;
+  view.progress = progress;
+  return view;
+});
+var groups = CATEGORIES.map(function (category) {
+  var list = skills.filter(function (s) { return s.category === category.id; });
+  return {
+    category: category,
+    skills: list,
+    unlocked: list.filter(function (s) { return s.status === "unlocked"; }).length
+  };
+});
+var counts = {
+  "unlocked": skills.filter(function (s) { return s.status === "unlocked"; }).length,
+  "in-progress": skills.filter(function (s) { return s.status === "in-progress"; }).length,
+  "locked": skills.filter(function (s) { return s.status === "locked"; }).length
+};
+
+/* ==========================================================
+   PIXEL GLYPHS (icons)
+   ========================================================== */
+var GLYPHS = {
+  lock: ["..###..", ".#...#.", ".#...#.", "#######", "###.###", "###.###", "#######"],
+  check: ["......#", ".....##", "#...##.", "##.##..", ".###...", "..#...."],
+  hourglass: ["#######", ".#...#.", "..#.#..", "...#...", "..#.#..", ".#.#.#.", ".#####.", "#######"],
+  close: ["#.....#", ".#...#.", "..#.#..", "...#...", "..#.#..", ".#...#.", "#.....#"],
+  download: ["...#...", "...#...", "...#...", "#..#..#", ".#####.", "..###..", "...#...", "#######"],
+  logoP: ["###", "#.#", "###", "#..", "#.."]
+};
+
+function glyph(rows, scale) {
+  scale = scale || 2;
+  var h = rows.length, w = rows[0].length, cells = "";
+  rows.forEach(function (row, y) {
+    for (var x = 0; x < row.length; x++) {
+      if (row[x] === "#") cells += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="currentColor"/>';
+    }
+  });
+  return '<svg viewBox="0 0 ' + w + " " + h + '" width="' + (w * scale) + '" height="' + (h * scale) +
+    '" shape-rendering="crispEdges" aria-hidden="true" focusable="false">' + cells + "</svg>";
+}
+function statusIcon(status, scale) {
+  if (status === "unlocked") return glyph(GLYPHS.check, scale);
+  if (status === "in-progress") return glyph(GLYPHS.hourglass, scale);
+  return glyph(GLYPHS.lock, scale);
+}
+
+/* ==========================================================
+   PIXEL CHARACTER (20 x 33)
+   ========================================================== */
+var PALETTE = {
+  h: "#A8703E", H: "#7B4B26", S: "#E8B286", s: "#C88E62", B: "#6A4224", E: "#2B2F45",
+  W: "#EDEBEF", w: "#B8B6C4", T: "#7B1C2B", P: "#2B2C33", K: "#6B4223"
+};
+var BODY = [
+  "......hhhhhhhh......",
+  "....hhhHhhhhhHhh....",
+  "...hhHhhhhhhhhHhh...",
+  "..hhhhhHhhhhhhhhhh..",
+  "..hHhhhhhhhhhhhhHh..",
+  "..HhhSSSSSSSSSShhH..",
+  "..HSSSSSSSSSSSSSSH..",
+  "..HSBBBBSSSSBBBBSH..",
+  "..sSSEESSSSSSEESSs..",
+  "..SSSSSSSSSSSSSSSS..",
+  "..SSSSSSSssSSSSSSS..",
+  "...SSSSSSSSSSSSSS...",
+  "....SSSssssssSSS....",
+  ".....sSSSSSSSSs.....",
+  ".......sSSSSs.......",
+  "......WWWTTWWW......",
+  "...WWWWWWTTWWWWWW...",
+  "..WWWWWWWTTWWWWWWW..",
+  "..WWWWWWwTTwWWWWWW..",
+  "..WWwWWWwTTwWWWwWW..",
+  "..WWwWWWwTTwWWWwWW..",
+  "..WWwWWWWTTWWWWwWW..",
+  "..wWWWWWWTTWWWWWWw..",
+  "..SSwWWWWTTWWWWwSS..",
+  "..SS.PPPPPPPPPP.SS..",
+  ".....PPPPPPPPPP.....",
+  ".....PPPPPPPPPP.....",
+  ".....PPPPPPPPPP....."
+];
+var LEGS_IDLE = [
+  ".....PPPP..PPPP.....",
+  ".....PPPP..PPPP.....",
+  ".....PPPP..PPPP.....",
+  "....KKKKK..KKKKK....",
+  "....KKKKK..KKKKK...."
+];
+var LEGS_A = [
+  "....PPPP....PPPP....",
+  "....PPPP....PPPP....",
+  "...PPPP......PPPP...",
+  "..KKKKK......KKKKK..",
+  "..KKKKK......KKKKK.."
+];
+var LEGS_B = [
+  ".....PPPPPPPPPP.....",
+  ".....PPPPPPPPPP.....",
+  "......PPPPPPPP......",
+  "......KKKKKKKK......",
+  "......KKKKKKKK......"
+];
+var LAPTOP = [
+  { x: 17, y: 18, w: 9, h: 6, c: "#8E8C96" },
+  { x: 18, y: 19, w: 7, h: 4, c: "#D8D3D6" },
+  { x: 19, y: 21, w: 1, h: 2, c: "#943A1F" },
+  { x: 21, y: 20, w: 1, h: 3, c: "#943A1F" },
+  { x: 23, y: 19, w: 1, h: 4, c: "#943A1F" },
+  { x: 16, y: 24, w: 11, h: 1, c: "#5A5860" }
+];
+
+function rowsToRects(rows, y0) {
+  var out = "";
+  rows.forEach(function (row, ry) {
+    var x = 0;
+    while (x < row.length) {
+      var ch = row[x];
+      if (ch === "." || !PALETTE[ch]) { x += 1; continue; }
+      var end = x;
+      while (end + 1 < row.length && row[end + 1] === ch) end += 1;
+      out += rect(x, y0 + ry, end - x + 1, 1, PALETTE[ch]);
+      x = end + 1;
+    }
+  });
+  return out;
+}
+
+var SPRITE_PARTS = {
+  body: rowsToRects(BODY, 0),
+  legsIdle: rowsToRects(LEGS_IDLE, BODY.length),
+  legsA: rowsToRects(LEGS_A, BODY.length),
+  legsB: rowsToRects(LEGS_B, BODY.length)
+};
+
+function characterSprite(withLaptop) {
+  var laptop = "";
+  if (withLaptop) LAPTOP.forEach(function (r) { laptop += rect(r.x, r.y, r.w, r.h, r.c); });
+  return '<g class="sprite"><g class="sprite-bob">' +
+    SPRITE_PARTS.body +
+    '<g class="legs legs-idle">' + SPRITE_PARTS.legsIdle + "</g>" +
+    '<g class="legs legs-a">' + SPRITE_PARTS.legsA + "</g>" +
+    '<g class="legs legs-b">' + SPRITE_PARTS.legsB + "</g>" +
+    laptop + "</g></g>";
+}
+
+/* ==========================================================
+   SCENES
+   ========================================================== */
+var BG = "#201D1E", ACCENT = "#943A1F", ACCENT_HI = "#B5532F", ACCENT_LO = "#6E2B17",
+    ACCENT_DEEP = "#4A1D10", INK = "#1B191A", PAPER = "#E9E4E0";
+
+function disc(cx, cy, r, fill) {
+  var out = '<g fill="' + fill + '">';
+  range(r * 2 + 1, 1, -r).forEach(function (dy) {
+    var half = Math.floor(Math.sqrt(r * r - dy * dy + r * 0.5));
+    out += rect(cx - half, cy + dy, half * 2 + 1, 1);
+  });
+  return out + "</g>";
+}
+
+function ground(top, bottom, width) {
+  var bricks = [], row = 0, y, x;
+  for (y = top + 3; y < bottom; y += 4) {
+    var offset = row % 2 === 0 ? 0 : -4;
+    for (x = offset; x < width; x += 8) {
+      bricks.push({ x: Math.max(x, 0), y: y, w: x < 0 ? 4 : 7, c: (x / 8 + row) % 2 === 0 ? ACCENT_LO : "#5E2514" });
+    }
+    row += 1;
+  }
+  var out = "<g>" + rect(0, top, width, bottom - top, ACCENT_DEEP);
+  bricks.forEach(function (b) { out += rect(b.x, b.y, b.w, 3, b.c); });
+  out += rect(0, top, width, 3, ACCENT);
+  range(Math.floor(width / 6), 6, 1).forEach(function (px) { out += rect(px, top, 2, 1, ACCENT_HI); });
+  return out + "</g>";
+}
+
+function platform(x, y, w) {
+  var out = "<g>" + rect(x, y, w, 2, ACCENT) + rect(x, y + 2, w, 3, ACCENT_LO) + rect(x + 2, y + 5, w - 4, 1, ACCENT_DEEP);
+  range(Math.floor((w - 2) / 6), 6, 2).forEach(function (dx) { out += rect(x + dx, y, 2, 1, ACCENT_HI); });
+  return out + "</g>";
+}
+
+function hills(heights, base, fill) {
+  var out = '<g fill="' + fill + '">';
+  heights.forEach(function (h, i) { out += rect(i * 8, base - h, 8, h); });
+  return out + "</g>";
+}
+
+function gridLines(w, h, step) {
+  var out = '<g stroke="' + PAPER + '" stroke-opacity="0.045" stroke-width="0.25">';
+  range(Math.floor(w / step), step, step).forEach(function (x) { out += '<line x1="' + x + '" y1="0" x2="' + x + '" y2="' + h + '"/>'; });
+  range(Math.floor(h / step), step, step).forEach(function (y) { out += '<line x1="0" y1="' + y + '" x2="' + w + '" y2="' + y + '"/>'; });
+  return out + "</g>";
+}
+
+function heroScene() {
+  var s = '<svg class="scene hero-scene" viewBox="0 0 96 96" role="img" data-i18n-aria="hero.sceneAlt" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid slice">';
+  s += rect(0, 0, 96, 96, BG);
+  s += gridLines(96, 96, 8);
+  s += hills([22, 26, 32, 28, 24, 30, 36, 30, 24, 20, 26, 22], 80, "#252122");
+  s += hills([10, 12, 16, 20, 16, 12, 10, 14, 18, 14, 10, 8], 80, "#2C2728");
+
+  s += disc(17, 17, 8, ACCENT) + disc(17, 17, 5, ACCENT_LO) + disc(17, 17, 2, BG);
+
+  s += "<g>" + rect(58, 8, 30, 11, "#2C2728");
+  range(7, 4, 60).forEach(function (x) { s += "<g>" + rect(x, 9, 2, 1, BG) + rect(x, 17, 2, 1, BG) + "</g>"; });
+  s += rect(60, 11, 7, 5, ACCENT) + rect(69, 11, 7, 5, ACCENT_LO) + rect(78, 11, 8, 5, ACCENT_LO) + "</g>";
+
+  s += '<g fill="' + PAPER + '" fill-opacity="0.3">' +
+    rect(34, 12, 1, 1) + rect(46, 24, 1, 1) + rect(80, 30, 1, 1) + rect(8, 38, 1, 1) + rect(52, 36, 1, 1) + "</g>";
+
+  s += platform(60, 46, 26);
+  s += '<g fill="' + PAPER + '">' + rect(68, 42, 2, 4) + rect(71, 39, 2, 7) + rect(74, 36, 2, 10) + "</g>";
+
+  s += platform(8, 60, 20);
+  s += "<g>" + rect(14, 50, 8, 10, PAPER) + rect(16, 52, 4, 1, INK) + rect(16, 54, 4, 1, INK) + rect(16, 56, 4, 1, INK) + "</g>";
+
+  s += ground(80, 96, 96);
+
+  s += rect(37, 80, 22, 1, INK, ' fill-opacity="0.5"');
+  s += '<g transform="translate(38 47)"><g class="hero-char">' + characterSprite(false) + "</g></g>";
+
+  s += '<g class="hover-frame" fill="#E08A62">' +
+    rect(34, 43, 4, 1) + rect(34, 43, 1, 4) + rect(58, 43, 4, 1) + rect(61, 43, 1, 4) +
+    rect(34, 83, 4, 1) + rect(34, 80, 1, 4) + rect(58, 83, 4, 1) + rect(61, 80, 1, 4) + "</g>";
+  s += '<rect class="hero-hit" x="34" y="43" width="28" height="41" fill="transparent" role="button" tabindex="0" data-i18n-aria="hero.coinsAria"></rect>';
+  return s + "</svg>";
+}
+
+function achievementsScene() {
+  var s = '<svg class="scene ach-scene phase-arrived" viewBox="0 0 160 64" role="img" data-i18n-aria="ach.sceneAlt" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid slice">';
+  s += rect(0, 0, 160, 64, BG);
+  s += gridLines(160, 64, 8);
+  s += hills([12, 16, 22, 18, 14, 20, 26, 20, 16, 12, 18, 22, 16, 12, 14, 18, 12, 10, 14, 10], 54, "#252122");
+
+  s += disc(140, 14, 7, ACCENT) + disc(140, 14, 4, ACCENT_LO) + disc(140, 14, 1, BG);
+
+  s += "<g>" +
+    rect(16, 46, 12, 8, ACCENT_LO) + rect(16, 46, 12, 2, ACCENT) +
+    rect(28, 40, 12, 14, ACCENT_LO) + rect(28, 40, 12, 2, ACCENT) +
+    rect(40, 34, 12, 20, ACCENT_LO) + rect(40, 34, 12, 2, ACCENT) +
+    '<g fill="' + PAPER + '">' +
+    rect(45, 24, 2, 1) + rect(44, 25, 4, 1) + rect(43, 26, 6, 2) + rect(44, 28, 4, 1) + rect(45, 29, 2, 1) +
+    "</g></g>";
+
+  s += ground(54, 64, 160);
+
+  s += rect(90, 54, 22, 1, INK, ' fill-opacity="0.5"');
+  s += '<g transform="translate(92 21)"><g class="ach-char">' + characterSprite(true) + "</g></g>";
+  return s + "</svg>";
+}
+
+/* ==========================================================
+   i18n / STATE
+   ========================================================== */
+var STORAGE_KEY = "pixel-ba-lang";
+var lang = "en";
+var selected = null;
+
+function t() { return dictionaries[lang]; }
+function get(path) {
+  return path.split(".").reduce(function (o, k) { return o[k]; }, t());
+}
+function statusLabel(status) {
+  var d = t().status;
+  if (status === "unlocked") return d.unlocked;
+  if (status === "in-progress") return d.progress;
+  return d.locked;
+}
+
+/* ==========================================================
+   BUILD STATIC PARTS
+   ========================================================== */
+// glyph placeholders
+$$("[data-glyph]").forEach(function (el) {
+  el.innerHTML = glyph(GLYPHS[el.getAttribute("data-glyph")], Number(el.getAttribute("data-scale")) || 2);
+});
+// CV links
+$$("[data-cv]").forEach(function (a) { a.setAttribute("href", candidate.cvUrl); });
+
+// scenes
+$("#hero-scene").innerHTML = heroScene();
+$("#ach-scene").innerHTML = achievementsScene();
+var heroSvg = $("#hero-scene svg");
+var achSvg = $("#ach-scene svg");
+
+// legend
+var STATUS_ORDER = ["unlocked", "in-progress", "locked"];
+$("#legend").innerHTML = STATUS_ORDER.map(function (status) {
+  return '<li class="legend-item" data-status="' + status + '">' +
+    '<span class="legend-icon" aria-hidden="true">' + statusIcon(status, 3) + "</span>" +
+    '<span class="legend-label" data-status-label="' + status + '"></span>' +
+    '<span class="legend-count">' + counts[status] + "</span></li>";
+}).join("");
+
+if (!STATUS_DEMO) $("#demo-note").remove();
+
+// category grid + skill cards
+var cardIndex = 0;
+$("#cat-grid").innerHTML = groups.map(function (group, gi) {
+  var cat = group.category;
+  return '<section class="cat px" aria-labelledby="cat-' + cat.id + '">' +
+    '<header class="cat-head">' +
+    '<span class="cat-idx" aria-hidden="true">' + String(gi + 1).padStart(2, "0") + "</span>" +
+    '<h3 id="cat-' + cat.id + '" class="cat-title" data-cat="' + cat.id + '"></h3>' +
+    '<span class="cat-count" data-cat-count="' + cat.id + '">' + group.unlocked + "/" + group.skills.length + "</span>" +
+    "</header>" +
+    '<ul class="skill-list">' +
+    group.skills.map(function (skill) {
+      var idx = cardIndex++;
+      return "<li>" +
+        '<button type="button" class="skill" data-skill="' + esc(skill.id) + '" data-status="' + skill.status +
+        '" style="--i:' + idx + '" aria-haspopup="dialog">' +
+        '<span class="skill-icon" aria-hidden="true">' +
+        (skill.status === "locked" ? glyph(GLYPHS.lock, 3) : '<span class="mono">' + esc(skill.mono) + "</span>") +
+        "</span>" +
+        '<span class="skill-text"><span class="skill-name"></span><span class="skill-status"></span></span>' +
+        '<span class="skill-mark" aria-hidden="true">' + statusIcon(skill.status, 2) + "</span>" +
+        "</button></li>";
+    }).join("") +
+    "</ul></section>";
+}).join("");
+
+/* ==========================================================
+   MODAL
+   ========================================================== */
+var modal = $("#modal");
+
+function buildFacts(skill) {
+  var p = skill.progress, m = t().modal;
+  if (skill.status === "unlocked") {
+    return [
+      { label: m.about, value: skill.desc[lang] },
+      { label: m.example, value: p.example ? p.example[lang] : m.placeholderExample, placeholder: !p.example },
+      { label: m.project, value: p.project ? p.project[lang] : m.placeholderProject, placeholder: !p.project }
+    ];
+  }
+  if (skill.status === "in-progress") {
+    return [
+      { label: m.studying, value: p.studying ? p.studying[lang] : skill.desc[lang] },
+      { label: m.next, value: p.next ? p.next[lang] : m.defaultNext }
+    ];
+  }
+  return [
+    { label: m.why, value: skill.why[lang] },
+    { label: m.goal, value: p.goal ? p.goal[lang] : m.defaultGoal }
+  ];
+}
+
+function renderModal(animate) {
+  if (!selected) { modal.innerHTML = ""; return; }
+  var skill = selected;
+  var facts = buildFacts(skill);
+  var burst = "";
+  if (animate && skill.status === "unlocked") {
+    burst = '<span class="burst">' + range(8).map(function (i) { return '<i style="--a:' + (i * 45) + 'deg"></i>'; }).join("") + "</span>";
+  }
+  modal.setAttribute("data-status", skill.status);
+  modal.innerHTML =
+    '<div class="modal-inner">' +
+    '<div class="modal-bar">' +
+    '<span class="badge">' + statusIcon(skill.status, 2) + esc(statusLabel(skill.status)) + "</span>" +
+    '<button type="button" class="icon-btn" data-close aria-label="' + esc(t().modal.close) + '">' + glyph(GLYPHS.close, 2) + "</button>" +
+    "</div>" +
+    '<div class="modal-body">' +
+    '<div class="modal-head">' +
+    '<span class="skill-icon modal-icon" aria-hidden="true">' +
+    (skill.status === "locked" ? glyph(GLYPHS.lock, 4) : '<span class="mono">' + esc(skill.mono) + "</span>") +
+    burst + "</span>" +
+    '<div><h3 id="skill-modal-title" class="modal-title">' + esc(skill.name[lang]) + "</h3>" +
+    '<p class="modal-cat">' + esc(t().categories[skill.category]) + "</p></div>" +
+    "</div>" +
+    '<dl class="facts">' +
+    facts.map(function (f) {
+      return '<div class="fact"><dt class="micro">' + esc(f.label) + "</dt><dd" +
+        (f.placeholder ? ' class="is-placeholder"' : "") + ">" + esc(f.value) + "</dd></div>";
+    }).join("") +
+    "</dl></div>" +
+    '<div class="modal-foot"><button type="button" class="btn btn-ghost btn-sm" data-close>' + esc(t().modal.close) + "</button></div>" +
+    "</div>";
+}
+
+function openModal(skill) {
+  selected = skill;
+  renderModal(true);
+  if (!modal.open) modal.showModal();
+}
+function closeModal() {
+  if (modal.open) modal.close();
+}
+
+modal.addEventListener("close", function () { selected = null; modal.removeAttribute("data-status"); });
+modal.addEventListener("click", function (e) {
+  if (e.target === modal || (e.target.closest && e.target.closest("[data-close]"))) closeModal();
+});
+
+$("#cat-grid").addEventListener("click", function (e) {
+  var btn = e.target.closest && e.target.closest(".skill");
+  if (!btn) return;
+  var id = btn.getAttribute("data-skill");
+  var skill = skills.filter(function (s) { return s.id === id; })[0];
+  if (skill) openModal(skill);
+});
+
+
+/* ==========================================================
+   PROJECTS — pixel art + quest log rendering
+   ========================================================== */
+var PROJECT_META = [
+  { art: "map",  tools: ["Miro"] },
+  { art: "bpmn", tools: ["BPMN 2.0"] },
+  { art: "site", tools: ["Tilda", "HTML", "CSS", "JS"] },
+  { art: "folio", tools: ["HTML", "CSS", "JS"] }
+];
+
+function pxArt(kind) {
+  var P = "#e9e4e0", R = "#943a1f", L = "#e08a62", D = "#6e2b17", G = "#3a3637", B = "#2a2627", o = "";
+  function r(x, y, w, h, c) { o += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + c + '"/>'; }
+  function box(x, y, w, h, c) { r(x, y, w, 1, c); r(x, y + h - 1, w, 1, c); r(x, y, 1, h, c); r(x + w - 1, y, 1, h, c); }
+  function diamond(cx, cy, n, c) { for (var i = -n; i <= n; i++) { var half = n - Math.abs(i); r(cx - half, cy + i, half * 2 + 1, 1, c); } }
+  var i, x;
+  r(0, 0, 64, 40, B);
+  if (kind === "map") {
+    for (i = 0; i < 3; i++) {
+      x = 4 + i * 20;
+      r(x, 3, 16, 6, P); r(x + 1, 4, 4, 4, R); r(x + 6, 5, 8, 1, G); r(x + 6, 7, 5, 1, G);
+      r(x, 11, 16, 4, R);
+      r(x, 17, 7, 5, P); r(x + 9, 17, 7, 5, L);
+      r(x, 24, 7, 5, L); r(x + 9, 24, 7, 5, P);
+      r(x, 31, 7, 5, P); r(x + 9, 31, 7, 5, D);
+    }
+    r(3, 2, 1, 35, G);
+  } else if (kind === "bpmn") {
+    box(2, 3, 60, 14, G); box(2, 20, 60, 17, G); r(2, 28, 60, 1, G);
+    r(5, 8, 4, 4, L); r(11, 9, 3, 2, L);
+    r(14, 6, 11, 8, P); r(16, 9, 7, 2, G);
+    diamond(33, 10, 4, R); r(26, 9, 3, 2, L);
+    r(39, 9, 4, 2, L); r(43, 6, 11, 8, P); r(45, 9, 7, 2, G);
+    r(55, 8, 5, 5, D); r(56, 9, 3, 3, L);
+    r(8, 22, 12, 5, P); r(10, 24, 8, 1, G); r(21, 24, 5, 1, L);
+    r(28, 22, 12, 5, L); r(30, 24, 8, 1, D); r(41, 24, 5, 1, L); r(46, 22, 12, 5, P); r(48, 24, 8, 1, G);
+    r(8, 31, 12, 5, P); r(10, 33, 8, 1, G); r(21, 33, 14, 1, L); r(35, 31, 12, 5, P); r(37, 33, 8, 1, G);
+  } else if (kind === "site") {
+    r(2, 2, 60, 36, G); r(2, 2, 60, 6, R);
+    r(4, 4, 2, 2, P); r(8, 4, 2, 2, P); r(12, 4, 2, 2, P);
+    r(5, 11, 32, 5, P); r(5, 18, 22, 2, L);
+    r(5, 23, 9, 4, L); r(16, 23, 9, 4, P); r(27, 23, 9, 4, P);
+    r(42, 11, 17, 16, D); r(46, 14, 9, 9, L);
+    for (i = 0; i < 3; i++) { x = 5 + i * 19; r(x, 29, 17, 7, P); r(x, 29, 17, 2, R); r(x + 2, 33, 10, 1, G); }
+  } else {
+    r(0, 32, 64, 8, R);
+    for (i = 0; i < 64; i += 8) r(i, 32, 1, 8, D);
+    r(0, 35, 64, 1, D); r(0, 38, 64, 1, D);
+    r(34, 26, 8, 6, D); r(42, 22, 8, 10, R); r(50, 18, 8, 14, D);
+    r(34, 25, 8, 1, L); r(42, 21, 8, 1, L); r(50, 17, 8, 1, L);
+    r(14, 17, 8, 2, "#a0703f"); r(14, 19, 8, 5, "#e8b48a"); r(16, 20, 1, 1, B); r(19, 20, 1, 1, B);
+    r(13, 24, 10, 7, P); r(17, 24, 2, 6, R);
+    r(14, 31, 3, 1, G); r(19, 31, 3, 1, G);
+    r(52, 6, 4, 4, P); r(8, 6, 2, 2, G); r(28, 10, 2, 2, G);
+  }
+  return '<svg viewBox="0 0 64 40" shape-rendering="crispEdges" aria-hidden="true">' + o + "</svg>";
+}
+
+var questEl = $("#quest");
+var FLIP_ICON = '<svg class="quest-flip-icon" width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><rect x="1" y="2" width="6" height="1"/><rect x="6" y="1" width="1" height="3"/><rect x="7" y="2" width="1" height="1"/><rect x="3" y="7" width="6" height="1"/><rect x="3" y="6" width="1" height="3"/><rect x="2" y="7" width="1" height="1"/></svg>';
+function renderQuest() {
+  var d = t().proj;
+  questEl.innerHTML = PROJECT_META.map(function (meta, i) {
+    var it = d.items[i];
+    var label = "1-" + (i + 1);
+    return '<li class="quest-item">' +
+      '<span class="quest-node" aria-hidden="true">' + (i + 1) + "</span>" +
+      '<article class="quest-card" tabindex="0" aria-label="' + esc(it.title) + '">' +
+        '<div class="quest-flip">' +
+          '<div class="quest-face quest-front px">' +
+            '<div class="quest-art">' + pxArt(meta.art) + "</div>" +
+            '<div class="quest-foot"><h3 class="quest-title">' + esc(it.title) + "</h3>" + FLIP_ICON + "</div>" +
+          "</div>" +
+          '<div class="quest-face quest-back px">' +
+            '<div class="quest-meta"><span class="quest-stage">' + esc(d.stage) + " " + label + "</span>" +
+            '<span class="quest-type">' + esc(it.type) + "</span></div>" +
+            '<h3 class="quest-title">' + esc(it.title) + "</h3>" +
+            '<p class="quest-desc">' + esc(it.desc) + "</p>" +
+            '<dl class="quest-facts">' +
+              "<div><dt>" + esc(d.tools) + '</dt><dd><ul class="quest-tools">' +
+                meta.tools.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></dd></div>" +
+              "<div><dt>" + esc(d.result) + "</dt><dd>" + esc(it.result) + "</dd></div>" +
+            "</dl>" +
+          "</div>" +
+        "</div>" +
+      "</article></li>";
+  }).join("");
+}
+// touch screens and keyboard: tap / Enter / Space flips the card (mouse uses hover)
+questEl.addEventListener("click", function (e) {
+  var card = e.target.closest(".quest-card");
+  if (card && window.matchMedia("(hover: none)").matches) card.classList.toggle("is-flipped");
+});
+questEl.addEventListener("keydown", function (e) {
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("quest-card")) {
+    e.preventDefault();
+    e.target.classList.toggle("is-flipped");
+  }
+});
+$("#footer-year").textContent = String(new Date().getFullYear());
+
+/* ==========================================================
+   APPLY LANGUAGE
+   ========================================================== */
+function applyLang() {
+  var d = t();
+  document.documentElement.lang = lang;
+  renderQuest();
+
+  $$("[data-i18n]").forEach(function (el) { el.textContent = get(el.getAttribute("data-i18n")); });
+  $$("[data-i18n-aria]").forEach(function (el) { el.setAttribute("aria-label", get(el.getAttribute("data-i18n-aria"))); });
+  $$("[data-cand]").forEach(function (el) { el.textContent = candidate[el.getAttribute("data-cand")][lang]; });
+  $$("[data-status-label]").forEach(function (el) { el.textContent = statusLabel(el.getAttribute("data-status-label")); });
+
+  $$(".lang-btn").forEach(function (b) {
+    b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang));
+  });
+
+  groups.forEach(function (group) {
+    var id = group.category.id;
+    $('[data-cat="' + id + '"]').textContent = group.category.name[lang];
+    $('[data-cat-count="' + id + '"]').setAttribute("aria-label",
+      statusLabel("unlocked") + ": " + group.unlocked + " / " + group.skills.length);
+  });
+
+  skills.forEach(function (skill) {
+    var btn = $('.skill[data-skill="' + skill.id + '"]');
+    var label = statusLabel(skill.status);
+    $(".skill-name", btn).textContent = skill.name[lang];
+    $(".skill-status", btn).textContent = label;
+    btn.setAttribute("aria-label", skill.name[lang] + " — " + label);
+  });
+
+  if (selected) renderModal(false);
+}
+
+function setLang(next) {
+  lang = next;
+  try { window.localStorage.setItem(STORAGE_KEY, next); } catch (err) { /* storage unavailable */ }
+  applyLang();
+}
+
+$$(".lang-btn").forEach(function (b) {
+  b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
+});
+
+// initial language: saved choice, else browser language
+(function () {
+  var saved = null;
+  try { saved = window.localStorage.getItem(STORAGE_KEY); } catch (err) { saved = null; }
+  if (saved === "ru" || saved === "en") lang = saved;
+  else if (navigator.language && navigator.language.toLowerCase().indexOf("ru") === 0) lang = "ru";
+})();
+applyLang();
+
+/* ==========================================================
+   BEHAVIOUR: hero walk, unlock flash, active screen, ach walk-in
+   ========================================================== */
+var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// hero character walks when "Explore" is pressed
+
+/* ---------- coin rain: click / Enter / Space on the hero character ---------- */
+var COIN_SVG = (function () {
+  var rows = ["..oooo..", ".oyyyyo.", "oyhyyyyo", "oyhyddyo", "oyhyddyo", "oyyyyyyo", ".oyyyyo.", "..oooo.."];
+  var col = { o: "#8a5a12", y: "#f2c14e", h: "#fff1b8", d: "#c98f1f" };
+  var out = '<svg viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true">';
+  rows.forEach(function (row, y) {
+    row.split("").forEach(function (ch, x) {
+      if (ch !== ".") out += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="' + col[ch] + '"/>';
+    });
+  });
+  return out + "</svg>";
+})();
+var coinLayer = document.createElement("div");
+coinLayer.className = "coin-layer";
+coinLayer.setAttribute("aria-hidden", "true");
+$("#hero-scene").appendChild(coinLayer);
+
+function coinRain() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (coinLayer.childElementCount > 90) return;
+  var fall = $("#hero-scene").clientHeight + 64;
+  for (var i = 0; i < 28; i++) {
+    var size = 18 + Math.round(Math.random() * 3) * 4;
+    var dur = 1.1 + Math.random() * 0.9;
+    var delay = Math.random() * 0.9;
+    var coin = document.createElement("span");
+    coin.className = "coin";
+    coin.style.setProperty("--x", (4 + Math.random() * 90).toFixed(1) + "%");
+    coin.style.setProperty("--s", size + "px");
+    coin.style.setProperty("--d", dur.toFixed(2) + "s");
+    coin.style.setProperty("--delay", delay.toFixed(2) + "s");
+    coin.style.setProperty("--fall", fall + "px");
+    coin.innerHTML = COIN_SVG;
+    coin.addEventListener("animationend", function (e) {
+      if (e.animationName === "coin-fall") e.currentTarget.remove();
+    });
+    coinLayer.appendChild(coin);
+  }
+}
+var heroHit = $(".hero-hit", heroSvg);
+heroHit.addEventListener("mousedown", function (e) { e.preventDefault(); });
+heroHit.addEventListener("click", coinRain);
+heroHit.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); coinRain(); }
+});
+$("#explore").addEventListener("click", function () {
+  heroSvg.classList.add("walking");
+  window.setTimeout(function () { heroSvg.classList.remove("walking"); }, 1100);
+});
+
+// achievements: walk in once
+var achPhase = reducedMotion ? "arrived" : "before";
+function setAchPhase(p) {
+  achPhase = p;
+  achSvg.setAttribute("class", "scene ach-scene phase-" + p + (p === "walking" ? " walking" : ""));
+}
+setAchPhase(achPhase);
+
+function setActive(id) {
+  $$("[data-nav]").forEach(function (a) {
+    if (a.getAttribute("data-nav") === id) a.setAttribute("aria-current", "true");
+    else a.removeAttribute("aria-current");
+  });
+  if (id === "achievements" && achPhase === "before") {
+    setAchPhase("walking");
+    window.setTimeout(function () { setAchPhase("arrived"); }, 1900);
+  }
+}
+setActive("profile");
+
+if ("IntersectionObserver" in window) {
+  // active screen = the one crossing the middle of the viewport
+  var screenObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) { if (entry.isIntersecting) setActive(entry.target.id); });
+  }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+  screenObserver.observe($("#profile"));
+  screenObserver.observe($("#achievements"));
+  screenObserver.observe($("#projects"));
+
+  // one-time unlock flash when the grid first scrolls into view
+  var gridObserver = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) {
+      $$(".skill").forEach(function (b) { b.classList.add("reveal"); });
+      gridObserver.disconnect();
+    }
+  }, { threshold: 0.12 });
+  gridObserver.observe($("#cat-grid"));
+} else {
+  // very old browsers: just show everything in its final state
+  setAchPhase("arrived");
+}
+})();
+</script>
+</body>
+</html>
