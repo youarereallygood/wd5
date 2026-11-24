@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сложный пример CSS Grid</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        /* Контейнер сетки */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: 180px 180px 375px 80px;
+            width: 90%;
+            max-width: 1200px;
+            gap: 10px;
+        }
+        /* Расположение элементов сетки */
+
+        .item6 {
+            grid-column: 1 / 7;
+            grid-row: 1;
+            background-color: #A1E8AF;
+        }
+
+        .item7 {
+            grid-column: 7 / 13;
+            grid-row: 1;
+            background-color: #FFE156;
+        }
+
+        .item8 {
+            grid-column: 1 / 13;
+            grid-row: 2;
+            background-color: #FF9F1C; 
+        }
+
+        .item5 {
+            grid-column: 1 / 5;
+            grid-row: 3;
+            background-color: #FFB6B9;
+        }
+
+        .item4 {
+            grid-column: 11 / 13;
+            grid-row: 10;
+            order: 3;
+            background-color: #4D96FF;
+        }
+        
+        /* Оформление элементов сетки */
+        .grid-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item item4">Футер</div>
+        <div class="grid-item item5">Большой блок</div>
+        <div class="grid-item item6">Широкий блок</div>
+        <div class="grid-item item7">Во всю ширину</div>
+        <div class="grid-item item8">Нижний блок</div>
+    </div>
+</body>
+</html>
